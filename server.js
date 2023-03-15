@@ -1,4 +1,6 @@
 const express = require("express");
+const { add } = require("./operations");
+const { parseOperands } = require("./utils");
 
 const app = express();
 
@@ -9,8 +11,8 @@ app.get("/add", (req, res) => {
 });
 
 app.get("/subtract", (req, res) => {
-    const {x, y} = parseOperands(req);
-    const difference = subtract(x,y);
+    const {x, y} = req.query;
+    const difference = parseInt(x) - parseInt(y);
     res.send(200, difference);
 });
 
@@ -27,7 +29,8 @@ app.get("/power", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-    res.send("Hello World");
+    console.log("Root Path request");
+    res.send(200, "Hello World, this is becoming mmuch more fun!");
 });
 
 app.listen(8000, (req, res) => {
